@@ -1,0 +1,26 @@
+<script src="react.development.js"></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type='text/babel'>
+ 
+    const App=()=>{
+       const [cnt1,updateCnt1] =React.useState(0);
+       const [cnt2,updateCnt2] =React.useState(0);
+       const isEven=React.useMemo(()=>{
+           let i=0;
+           while (i<2000000000) {
+              i++; 
+           }
+           return cnt1%2==0;
+       },[cnt1]);
+        return <h1>
+          <p><button onClick={()=>updateCnt1(cnt1+1)}>count:{cnt1} </button></p>
+          <h1>{isEven ? 'Even' :'ODD'}</h1>
+          <p><button onClick={()=>updateCnt2(cnt2+1)}>count:{cnt2}</button></p>
+        </h1>
+    }
+    ReactDOM.render(<App />,document.getElementById('root'));
+</script>

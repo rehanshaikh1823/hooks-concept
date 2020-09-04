@@ -1,0 +1,124 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const initialState = {
+    firstCounter: 0,
+    secondCounter: 10
+  };
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "increament":
+        return { ...state, firstCounter: state.firstCounter + action.value };
+        break;
+      case "decreament":
+        return { ...state, firstCounter: state.firstCounter - action.value };
+        break;
+      case "increamentSecondCounter":
+        return { ...state, secondCounter: state.secondCounter + action.value };
+        break;
+      case "decreamentSecondCounter":
+        return { ...state, secondCounter: state.secondCounter - action.value };
+        break;
+      case "reset":
+        return initialState;
+        break;
+
+      default:
+        return initialState;
+        break;
+    }
+  };
+  const AppF = () => {
+    const [state, dispatch] = React.useReducer(reducer, initialState);
+    return (
+      <div>
+        <h3>count = {state.firstCounter}</h3>
+        <h3>count = {state.secondCounter}</h3>
+        <button onClick={() => dispatch({ type: "increament", value: 1 })}>
+          increament
+        </button>
+        <button onClick={() => dispatch({ type: "decreament", value: 1 })}>
+          decreament
+        </button>
+        <button onClick={() => dispatch({ type: "increament", value: 5 })}>
+          increament five
+        </button>
+        <button onClick={() => dispatch({ type: "decreament", value: 5 })}>
+          decreament five
+        </button>
+        <button
+          onClick={() =>
+            dispatch({ type: "increamentSecondCounter", value: 5 })
+          }
+        >
+          increament five SecondCounter
+        </button>
+        <button
+          onClick={() =>
+            dispatch({ type: "decreamentSecondCounter", value: 5 })
+          }
+        >
+          decreament five SecondCounter
+        </button>
+        <button onClick={() => dispatch({ type: "reset" })}>reset</button>
+      </div>
+    );
+  };
+  ReactDOM.render(<AppF />, document.getElementById("root"));
+</script>
+
+<!-- 
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const initVal = {
+    cnt: 0
+  };
+  const reducer = (state, action) => {
+    debugger;
+    switch (action.type) {
+      case "inc":
+        state = {
+          cnt: state.cnt + action.val
+        };
+        break;
+      case "dec":
+        state = {
+          cnt: state.cnt - action.val
+        };
+        break;
+      default:
+        break;
+    }
+    return state;
+  };
+  const App = () => {
+    const [state, dispatch] = React.useReducer(reducer, initVal);
+    const fnClick = () => {
+      dispatch({ type: "inc", val: 1 });
+    };
+    const fnDecFive = () => {
+      dispatch({ type: "dec", val: 5 });
+    };
+    const fnIncFive = () => {
+      dispatch({ type: "inc", val: 5 });
+    };
+    return (
+      <div>
+        <h1>{state.cnt}</h1>
+        <input type="button" value="Dec5" onClick={fnDecFive} />
+        <input type="button" value="click" onClick={fnClick} />
+        <input type="button" value="Inc5" onClick={fnIncFive} />
+      </div>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script> -->

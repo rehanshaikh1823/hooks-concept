@@ -1,0 +1,48 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const themes = {
+    light: {
+      foreground: "#000000",
+      background: "#eeeeee"
+    },
+    dark: {
+      foreground: "#ffffff",
+      background: "#222222"
+    }
+  };
+
+  const ThemeContext = React.createContext(themes.light);
+
+  function App() {
+    return (
+      <ThemeContext.Provider>
+        <Toolbar />
+      </ThemeContext.Provider>
+    );
+  }
+
+  function Toolbar(props) {
+    return (
+      <div>
+        <ThemedButton />
+      </div>
+    );
+  }
+
+  function ThemedButton() {
+    const theme = React.useContext(ThemeContext);
+
+    return (
+      <button style={{ background: theme.background, color: theme.foreground }}>
+        I am styled by theme context!
+      </button>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

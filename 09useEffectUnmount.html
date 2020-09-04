@@ -1,0 +1,44 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const HookMouse = () => {
+    const [x, setX] = React.useState(0);
+    const [y, setY] = React.useState(0);
+
+    const logMousePosition = e => {
+      console.log("Mouse event");
+      setX(e.clientX);
+      setY(e.clientY);
+    };
+
+    React.useEffect(() => {
+      console.log("useFffect called");
+      window.addEventListener("mousemove", logMousePosition);
+      return () => {
+        console.log("Component unmounting code");
+        window.removeEventListener("mousemove", logMousePosition);
+      };
+    }, []);
+    return (
+      <div>
+        Hooks - X - {x} Y - {y}
+      </div>
+    );
+  };
+
+  const MouseContainer = () => {
+    const [display, setDisplay] = React.useState(true);
+    return (
+      <div>
+        <button onClick={() => setDisplay(!display)}>Toggle display</button>
+        {display && <HookMouse />}
+      </div>
+    );
+  };
+
+  ReactDOM.render(<MouseContainer />, document.getElementById("root"));
+</script>

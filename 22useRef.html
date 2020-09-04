@@ -1,0 +1,30 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  class C extends React.Component {
+    render() {
+      return (
+        <div>
+          <input ref={this.props.myRef} />
+        </div>
+      );
+    }
+  }
+  const App = () => {
+    const myRef = React.useRef({});
+    const fnClick = () => {
+      myRef.current.value = "ssss";
+    };
+    return (
+      <div>
+        <C myRef={myRef} />
+        <input type="button" value="click" onClick={fnClick} />
+      </div>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

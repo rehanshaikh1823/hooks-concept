@@ -1,0 +1,52 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const useCustomHook = (count = 0, value) => {
+    const [cnt, updateCnt] = React.useState(count);
+    const incement = () => {
+      updateCnt(prevCount => cnt + value);
+    };
+    const decrement = () => {
+      updateCnt(prevCount => cnt - value);
+    };
+    const reset = () => {
+      updateCnt(0);
+    };
+    return [cnt, incement, decrement, reset];
+  };
+  const A = () => {
+    const [cnt, incement, decrement, reset] = useCustomHook(0, 1);
+    return (
+      <div>
+        <h1>{cnt}</h1>
+        <button onClick={incement}>Inc</button>
+        <button onClick={decrement}>Dec</button>
+        <button onClick={reset}>Reset</button>
+      </div>
+    );
+  };
+  const B = () => {
+    const [cnt, incement, decrement, reset] = useCustomHook(10, 10);
+    return (
+      <div>
+        <h1>{cnt}</h1>
+        <button onClick={incement}>Inc</button>
+        <button onClick={decrement}>Dec</button>
+        <button onClick={reset}>Reset</button>
+      </div>
+    );
+  };
+  const App = () => {
+    return (
+      <div>
+        <A />
+        <B />
+      </div>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

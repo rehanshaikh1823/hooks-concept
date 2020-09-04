@@ -1,0 +1,38 @@
+<script src="react.development.js"></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type='text/babel'>
+    const Title=React.memo(({name})=>{
+        console.log('title compnet');
+        return <h1>{name}</h1>
+    })
+    const Button=React.memo(({fnUpdate,children})=>{
+        console.log('button',children);
+        return <p><button onClick={fnUpdate}>{children}</button></p>
+    })
+    const Count=React.memo(({title,val})=>{
+        console.log('count',title);;
+        return <h1>{title} {val}</h1>
+    })
+    const App=()=>{
+        const [age,updateAge] =React.useState(0);
+        const [sal,updateSal] =React.useState(1000);
+        const fnSetAge=React.useCallback(()=>{
+            updateAge(age+1)
+        },[age]);
+        const fnSetSal=React.useCallback(()=>{
+            updateSal(sal+1000);
+        },[sal]);
+        return <div>
+            <Title name="My NIT" />
+            <Count title="Age :" val={age}/>
+            <Button fnUpdate={fnSetAge}>Inc Age</Button>
+            <Count title='Sal:' val={sal} />
+            <Button fnUpdate={fnSetSal}>Inc Salary</Button>
+        </div>
+    }
+    ReactDOM.render(<App />,document.getElementById('root'));
+</script>

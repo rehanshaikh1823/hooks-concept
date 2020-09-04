@@ -1,0 +1,99 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const TitleUpdateF = () => {
+    const [cnt, updateCnt] = React.useState(0);
+    const [name, updateName] = React.useState("");
+    React.useEffect(() => {
+      console.log("title udpate");
+      document.title = "He clicked me " + cnt + "  time(s)";
+      return () => {
+        alert("am going to unmount");
+      };
+    }, [cnt]);
+    return (
+      <div>
+        <h1>Hook Compnent</h1>
+        <input onChange={(e) => updateName(e.target.value)} />
+        <input type="button" value="click" onClick={() => updateCnt(cnt + 1)} />
+      </div>
+    );
+  };
+  class TitleUpdateC extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        cnt: 0,
+        name: "",
+      };
+    }
+    componentWillUnmount() {
+      alert("am going to unmount");
+    }
+    fnUpdateCnt() {
+      this.setState({
+        cnt: this.state.cnt + 1,
+      });
+    }
+    componentDidMount() {
+      document.title = "He clicked me " + this.state.cnt + "  time(s)";
+    }
+
+    componentDidUpdate(preProps, preState) {
+      if (this.state.cnt != preState.cnt) {
+        console.log("my title updated");
+        document.title = "He clicked me " + this.state.cnt + "  time(s)";
+      }
+    }
+    fnChange(eve) {
+      this.setState({
+        name: eve.target.value,
+      });
+    }
+    render() {
+      return (
+        <div>
+          <h1>Class Compnent</h1>
+          <input onChange={this.fnChange.bind(this)} />
+          <input
+            type="button"
+            value="click"
+            onClick={this.fnUpdateCnt.bind(this)}
+          />
+        </div>
+      );
+    }
+  }
+
+  class App extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        isShow: true,
+      };
+    }
+    fnUpdate() {
+      this.setState({
+        isShow: !this.state.isShow,
+      });
+    }
+    render() {
+      return (
+        <div>
+          <input
+            type="button"
+            value="toggle"
+            onClick={this.fnUpdate.bind(this)}
+          />
+          {this.state.isShow && <TitleUpdateF />}
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

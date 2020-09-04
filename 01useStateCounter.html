@@ -1,0 +1,31 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const AppF = () => {
+    const [Count, setCount] = React.useState(0);
+    const increamentByOne = () => {
+      setCount(Count + 1);
+    };
+    return (
+      <div>
+        <h1>Part 1 (simple increment) </h1>
+        <h1>{Count}</h1>
+        <input
+          type="button"
+          onClick={increamentByOne}
+          value="increamentByOne"
+        />
+        <input
+          type="button"
+          onClick={() => setCount(Count + 5)}
+          value="increamentByFive"
+        />
+      </div>
+    );
+  };
+  ReactDOM.render(<AppF />, document.getElementById("root"));
+</script>

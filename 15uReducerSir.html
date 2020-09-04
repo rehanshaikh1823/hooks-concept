@@ -1,0 +1,50 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const initVal = {
+    cnt: 0
+  };
+  const reducer = (state, action) => {
+    debugger;
+    switch (action.type) {
+      case "inc":
+        state = {
+          cnt: state.cnt + action.val
+        };
+        break;
+      case "dec":
+        state = {
+          cnt: state.cnt - action.val
+        };
+        break;
+      default:
+        break;
+    }
+    return state;
+  };
+  const App = () => {
+    const [state, dispatch] = React.useReducer(reducer, initVal);
+    const fnClick = () => {
+      dispatch({ type: "inc", val: 1 });
+    };
+    const fnDecFive = () => {
+      dispatch({ type: "dec", val: 5 });
+    };
+    const fnIncFive = () => {
+      dispatch({ type: "inc", val: 5 });
+    };
+    return (
+      <div>
+        <h1>{state.cnt}</h1>
+        <input type="button" value="Dec5" onClick={fnDecFive} />
+        <input type="button" value="click" onClick={fnClick} />
+        <input type="button" value="Inc5" onClick={fnIncFive} />
+      </div>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

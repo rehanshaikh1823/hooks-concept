@@ -1,0 +1,38 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const initialState = 0;
+  const reducer = (state, action) => {
+    switch (action) {
+      case "increament":
+        return state + 1;
+        break;
+      case "decreament":
+        return state - 1;
+        break;
+      case "reset":
+        return initialState;
+        break;
+
+      default:
+        return initialState;
+        break;
+    }
+  };
+  const AppF = () => {
+    const [state, dispatch] = React.useReducer(reducer, initialState);
+    return (
+      <div>
+        <h3>count = {state}</h3>
+        <button onClick={() => dispatch("increament")}>increament</button>
+        <button onClick={() => dispatch("decreament")}>decreament</button>
+        <button onClick={() => dispatch("reset")}>reset</button>
+      </div>
+    );
+  };
+  ReactDOM.render(<AppF />, document.getElementById("root"));
+</script>

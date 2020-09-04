@@ -1,0 +1,32 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const List = () => {
+    const [players, updatePlayers] = React.useState([]);
+    const [name, updateName] = React.useState("");
+    const fnSubmit = () => {
+      updatePlayers([...players, name]);
+    };
+    return (
+      <div>
+        <p>
+          Name: <input id="u" onChange={(e) => updateName(e.target.value)} />
+          <input type="button" value="submit" onClick={fnSubmit} />
+        </p>
+        <p>
+          <ol>
+            {players.map((v) => {
+              return <li>{v}</li>;
+            })}
+          </ol>
+        </p>
+      </div>
+    );
+  };
+
+  ReactDOM.render(<List />, document.getElementById("root"));
+</script>

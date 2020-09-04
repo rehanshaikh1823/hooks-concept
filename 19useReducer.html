@@ -1,0 +1,69 @@
+<script src="react.development.js"></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type='text/babel'>
+const ctx=React.createContext();
+ const initVal={
+     'name':'sachin',
+     'loc':'mum'
+ }
+ 
+ const reducer=(state,action)=>{
+     switch(action.type){
+         case 'NAME':
+            state={
+                ...state,
+                name:action.payload
+            }
+         break;
+         case 'LOC':
+            state={
+                ...state,
+                loc:action.payload
+            }
+         break;
+     }
+    return state;
+ }  
+  const C =()=>{
+       var ctxData=React.useContext(ctx);
+      return <h1>
+         Name:{ctxData.state.name}   Loc: {ctxData.state.loc}
+      </h1>
+
+  }
+   const B =()=>{
+        const [loc,updateLoc] =React.useState('');
+        const ctxData=React.useContext(ctx);
+        return <h1>
+          B: Loc: <input onChange={(e)=>updateLoc(e.target.value)} /><input type='button' value="submit" onClick={()=>ctxData.dispatch({type:'LOC',payload:loc})} />
+        </h1>
+    }
+    const A =()=>{
+        const ctxData= React.useContext(ctx);
+        const [name,updateName] =React.useState('');
+        const fnUpdateName=()=>{
+            ctxData.dispatch({
+                type:'NAME',
+                payload:name
+            })
+        }
+        return <h1>
+          A: Name: <input onChange={(e)=>updateName(e.target.value)} /><input type='button' value="submit" onClick={fnUpdateName} />
+        </h1>
+    }
+    const App=()=>{
+        const [state,dispatch]=React.useReducer(reducer,initVal)
+          return <div>
+            <ctx.Provider value={{state,dispatch}}>
+              <A />
+              <B />
+              <C />
+            </ctx.Provider >
+          </div> 
+    }
+    ReactDOM.render(<App />,document.getElementById('root'));
+</script>

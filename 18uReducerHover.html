@@ -1,0 +1,65 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const initVal = {
+    cnt: 1,
+    users: [],
+    photos: []
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "INC":
+        state = {
+          ...state,
+          cnt: state.cnt + 1
+        };
+        break;
+      case "USERS":
+        state = {
+          ...state,
+          users: action.data
+        };
+        break;
+      case "PHOTOS":
+        state = {
+          ...state,
+          photos: action.data
+        };
+        break;
+    }
+    return state;
+  };
+  const Hover = () => {
+    const [state, dispatch] = React.useReducer(reducer, initVal);
+    return (
+      <h1 onMouseOver={() => dispatch({ type: "INC" })}>
+        He Hover me {state.cnt} time(s){" "}
+      </h1>
+    );
+  };
+  const Click = () => {
+    const [state, dispatch] = React.useReducer(reducer, initVal);
+    return (
+      <h1>
+        Click{" "}
+        <button onClick={() => dispatch({ type: "INC" })}>
+          he click me {state.cnt} time(s)
+        </button>
+      </h1>
+    );
+  };
+  const App = () => {
+    return (
+      <div>
+        <Click />
+        <Hover />
+      </div>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

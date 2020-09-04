@@ -1,0 +1,46 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const FirstNameUserContext = React.createContext();
+  const LastNameUserContext = React.createContext();
+  const C = () => {
+    const fn = React.useContext(FirstNameUserContext);
+    const ln = React.useContext(LastNameUserContext);
+    return (
+      <h1>
+        this is C component ... {fn} {ln}
+      </h1>
+    );
+  };
+  const B = () => {
+    return (
+      <div>
+        <C />
+      </div>
+    );
+  };
+  const A = () => {
+    return (
+      <div>
+        <B />
+      </div>
+    );
+  };
+  const App = () => {
+    return (
+      <div>
+        <FirstNameUserContext.Provider value={"Rehan"}>
+          <LastNameUserContext.Provider value={"Shaikh"}>
+            <A />
+          </LastNameUserContext.Provider>
+        </FirstNameUserContext.Provider>
+      </div>
+    );
+  };
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

@@ -1,0 +1,30 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const AppF = () => {
+    const [data, setData] = React.useState({});
+    const fnChange = (event) => {
+      const key = event.target.id;
+      const value = event.target.value;
+
+      setData({ ...data, [key]: value });
+    };
+    const fnLogin = () => {
+      console.log(data);
+    };
+    return (
+      <div>
+        User id : <input type="text" onChange={fnChange} id="u" />
+        <br></br>
+        Password : <input type="password" onChange={fnChange} id="p" />
+        <br></br>
+        <input type="button" onClick={fnLogin} value="Login" />
+      </div>
+    );
+  };
+  ReactDOM.render(<AppF />, document.getElementById("root"));
+</script>

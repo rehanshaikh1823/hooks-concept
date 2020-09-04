@@ -1,0 +1,100 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const CountContext = React.createContext();
+  const F = () => {
+    const countContext = React.useContext(CountContext);
+    return (
+      <div>
+        Componet F {countContext.state}
+        <button onClick={() => countContext.dispatch("increment")}>
+          increment
+        </button>
+        <button onClick={() => countContext.dispatch("decrement")}>
+          decrement
+        </button>
+        <button onClick={() => countContext.dispatch("reset")}>reset</button>
+      </div>
+    );
+  };
+  const E = () => {
+    return (
+      <div>
+        <F />
+      </div>
+    );
+  };
+  const D = () => {
+    const countContext = React.useContext(CountContext);
+    return (
+      <div>
+        Componet D {countContext.state}
+        <button onClick={() => countContext.dispatch("increment")}>
+          increment
+        </button>
+        <button onClick={() => countContext.dispatch("decrement")}>
+          decrement
+        </button>
+        <button onClick={() => countContext.dispatch("reset")}>reset</button>
+      </div>
+    );
+  };
+  const C = () => {
+    return (
+      <div>
+        <E />
+      </div>
+    );
+  };
+  const B = () => {
+    return (
+      <div>
+        <D />
+      </div>
+    );
+  };
+  const A = () => {
+    const countContext = React.useContext(CountContext);
+    return (
+      <div>
+        Componet A {countContext.state}
+        <button onClick={() => countContext.dispatch("increment")}>
+          increment
+        </button>
+        <button onClick={() => countContext.dispatch("decrement")}>
+          decrement
+        </button>
+        <button onClick={() => countContext.dispatch("reset")}>reset</button>
+      </div>
+    );
+  };
+  const initialState = 0;
+  const reducer = (state, action) => {
+    switch (action) {
+      case "increment":
+        return state + 1;
+      case "decrement":
+        return state - 1;
+      case "reset":
+        return initialState;
+    }
+  };
+  const App = () => {
+    const [state, dispatch] = React.useReducer(reducer, initialState);
+    return (
+      <CountContext.Provider value={{ state, dispatch }}>
+        <div>
+          Count = {state}
+          <A />
+          <B />
+          <C />
+        </div>
+      </CountContext.Provider>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

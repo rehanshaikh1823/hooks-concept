@@ -1,0 +1,57 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const useInput = initialValue => {
+    const [value, setValue] = React.useState(initialValue);
+    const reset = () => {
+      setValue(initialValue);
+    };
+
+    const bind = {
+      value,
+      onChange: e => {
+        setValue(e.target.value);
+      }
+    };
+
+    return [value, bind, reset];
+  };
+  const UserForm = () => {
+    const [firstName, bindFirstName, resetFirstName] = useInput("");
+    const [lastName, bindLastName, resetLastName] = useInput("");
+
+    const submitHandler = e => {
+      e.preventDefault();
+      alert(`hello ${firstName} ${lastName}`);
+      resetFirstName();
+      resetLastName();
+    };
+    return (
+      <div>
+        <form onSubmit={submitHandler}>
+          <div>
+            <label>First Name</label>
+            <input {...bindFirstName} type="text" />
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input {...bindLastName} type="text" />
+          </div>
+          <button>Submit</button>
+        </form>
+      </div>
+    );
+  };
+  const App = () => {
+    return (
+      <div>
+        <UserForm />
+      </div>
+    );
+  };
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

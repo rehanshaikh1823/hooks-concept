@@ -1,0 +1,40 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const ctx = React.createContext();
+  const C = () => {
+    const data = React.useContext(ctx);
+    return <h1>Am C:{data}</h1>;
+  };
+  const B = () => {
+    return (
+      <div>
+        <C />
+      </div>
+    );
+  };
+  const A = () => {
+    return (
+      <div>
+        <B />
+      </div>
+    );
+  };
+  const App = () => {
+    const name = "sachin";
+
+    return (
+      <div>
+        <ctx.Provider value={name}>
+          <A />
+        </ctx.Provider>
+      </div>
+    );
+  };
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

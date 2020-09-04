@@ -1,0 +1,45 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const initialState = {
+    name: "Rehan",
+    age: 23,
+    hobbies: ["gym", "playing", "learning"],
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "CHANGE_NAME":
+        state = {
+          ...state,
+          name: "sonu",
+        };
+        break;
+      default:
+        break;
+    }
+    return state;
+  };
+
+  const App = () => {
+    const [data, dispatch] = React.useReducer(reducer, initialState);
+    const handleClick = () => {
+      dispatch({
+        type: "CHANGE_NAME",
+        payload: "sonu",
+      });
+    };
+    return (
+      <div>
+        <h2>my name is {data.name} </h2>
+        <button onClick={handleClick}>change name</button>
+      </div>
+    );
+  };
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>

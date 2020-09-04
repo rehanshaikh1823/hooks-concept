@@ -1,0 +1,27 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+  const AppF = () => {
+    const [value, setValue] = React.useState(0);
+    React.useEffect(() => {
+      document.title = `you clicked ${value} times`;
+    });
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            setValue(value + 1);
+          }}
+        >
+          click me {value} time
+        </button>
+      </div>
+    );
+  };
+  ReactDOM.render(<AppF />, document.getElementById("root"));
+</script>
